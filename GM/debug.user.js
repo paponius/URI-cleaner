@@ -2,10 +2,11 @@
 // This file is used to allow debugging.
 // It's only a header with last 'require' directive chaining the production version GM user script file.
 // The production version user script file's header is then ignored by GreaseMonkey.
-// 
+//
 // This development version file loads local files (file://...), they can be edited without need to copy/paste to GM.
 // There is no need to update ...?v=1.1 for these file://... pseudo links.
 // To make it work, you need to allow local access for Tamper Monkey extension.
+// Add to browser: file:///C:/Users/Papo/Documents/GitHub/xxxx/GM/
 
 
 // ==UserScript==

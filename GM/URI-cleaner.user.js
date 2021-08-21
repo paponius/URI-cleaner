@@ -3,7 +3,7 @@
 // @namespace    http://www.ponius.com/uricl/
 // @description  Removes all tracking info from imdb links. Keeps other parameters intact.
 // @author       papo
-// @version      1.4
+// @version      1.6
 //// Sites
 //// match can not be http?:// nor http*://
 // @match        http://*.imdb.com/*
@@ -15,7 +15,7 @@
 //// tampermonkey has more, but script will silently fail using e.g. document-body in GreaseMonkey
 // @run-at       document-start
 // @grant        none
-// @require      http://www.ponius.com/uricl/src/NormalizeURI.js
+// @require      http://www.ponius.com/uricl/src/NormalizeURI.js?v1.5
 // ==/UserScript==
 
 // This is GreaseMonkey user script file.

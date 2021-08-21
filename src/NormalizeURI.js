@@ -66,6 +66,7 @@ function normalizeLnk(uri) {
 
 	if ( uri.pathname.endsWith('/bio') ||
 		 uri.pathname.startsWith('/title/') ||
+		 uri.pathname.startsWith('/list/') ||
 		 uri.pathname.startsWith('/name/')
 	   ) {
     	if (uri.pathname.slice(-1) !== '/') { uri.pathname+='/'; }
@@ -102,6 +103,7 @@ function fixBrowserAddressBox() {
 
 
 function fixL(links, j=0) {
+	if (DEBUG) { var cnt = 0; } // ugly syntax, but needed for minimizer (or not if it detects unused)
 	var lnk,
 		timeForPause = Date.now()+200;
 	if (DEBUG) { console.log('NormalizeURI.js: fixL: START from', j); } /* jshint -W084 */
@@ -120,7 +122,7 @@ function fixL(links, j=0) {
 			if (Object.keys(args).length !== 0) {
 				if (imdbFix(args)) { // true: a fix was done
 					lnk.search = objectToQuery(args);
-					if (DEBUG) { console.count('NormalizeURI.js: fixL: query fixes done'); }
+					if (DEBUG) { cnt++; }
 				}
 				normalizeLnk(lnk);
 			}
@@ -128,7 +130,7 @@ function fixL(links, j=0) {
 		if (lnk.pathname !== '/') { lnk.isFixed=1; }  // p: why?
 		// else { console.log('NormalizeURI.js: fixL: path is /',lnk); }
 	}
-	if (DEBUG) { console.log('NormalizeURI.js: fixL: FINISHES', j); }
+	if (DEBUG) { console.log('NormalizeURI.js: fixL: FINISHES (all, fixed)', j, cnt); }
 }
 
 
@@ -136,19 +138,31 @@ function fixL(links, j=0) {
 function regMutationObserver() {
 	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 	new MutationObserver(mutations => {
-		if (DEBUG) { console.log('NormalizeURI.js: regMutationObserver: runs'); }
+		if (DEBUG) { console.log('NormalizeURI.js: regMutationObserver: fired'); }
 
 		for (let m of mutations) {
-			if (m.addedNodes.length !== 0) {
-				let elements = m.target.querySelectorAll(':scope a');
-				// cool, but getElementsByTagName can be used on element and is probably faster
-				let elements_ = m.target.getElementsByTagName('a');
-				if (DEBUG && (elements.length !== 0 || elements_.length !== 0)) {
-					console.log('NormalizeURI.js: regMutationObserver: new links:', elements.length, elements_.length);
-				}
-				if (elements.length !== elements_.length) { alert('different results'); }
-				if (elements.length !== 0) { fixL(elements); }
+			if (m.addedNodes.length === 0) { continue; }
+
+			// todo: but target is only the one whose children were added
+			//     we should not check target, but m.addedNodes
+			let elements__ = [];
+			for (let par of m.addedNodes) {
+				if (!(par instanceof HTMLElement)) { continue; } // could be #Text and error
+				if (par instanceof HTMLStyleElement) { continue; } // Style does not have children
+				if (par.children && par.children.length === 0) { continue; } // will this help?
+				let tmp = par.getElementsByTagName('a');
+				let tmp_arr = Array.prototype.slice.call(tmp);
+				elements__ = elements__.concat(tmp_arr);
 			}
+
+			let elements = m.target.querySelectorAll(':scope a');
+			// cool, but getElementsByTagName can be used on element and is probably faster
+			let elements_ = m.target.getElementsByTagName('a');
+			if (DEBUG && (elements.length !== 0 || elements_.length !== 0)) {
+				console.log('NormalizeURI.js: regMutationObserver: new links:', elements.length, elements_.length, elements__.length);
+			}
+			if (elements.length !== elements_.length) { alert('different results'); }
+			if (elements.length !== 0) { fixL(elements); }
 		}
 	})
 	.observe(document, {
