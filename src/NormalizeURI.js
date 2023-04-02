@@ -12,8 +12,8 @@
 (function() {
 "use strict";
 
-var DEBUG = false;
-DEBUG = true;
+var DEBUG = ( GM && GM.info.script.name.indexOf('DEBUG') !== -1 );
+
 
 if (DEBUG) { console.log('NormalizeURI.js: START, state:', document.readyState); }
 
