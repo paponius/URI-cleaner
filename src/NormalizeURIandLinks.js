@@ -15,7 +15,7 @@
 var DEBUG = ( GM && GM.info.script.name.indexOf('DEBUG') !== -1 );
 
 
-if (DEBUG) { console.log('NormalizeURI.js: START, state:', document.readyState); }
+if (DEBUG) { console.log('NormalizeURIandLinks.js: START, state:', document.readyState); }
 
 // from pparam.js, made more generic
 // alt new method: URLSearchParams [https://stackoverflow.com/a/901144/3273963]
@@ -106,14 +106,14 @@ function fixL(links, j=0) {
 	if (DEBUG) { var cnt = 0; } // ugly syntax, but needed for minimizer (or not if it detects unused)
 	var lnk,
 		timeForPause = Date.now()+200;
-	if (DEBUG) { console.log('NormalizeURI.js: fixL: START from', j); } /* jshint -W084 */
+	if (DEBUG) { console.log('NormalizeURIandLinks.js: fixL: START from', j); } /* jshint -W084 */
 	for (; lnk=links[j]; j++) {
 		if (lnk.isFixed || !lnk.href) { continue; }
 
 		// pause and continue the next event cycle, give browser chance to do stuff 
 		if (Date.now() > timeForPause) { /* jshint -W083 */
 			setTimeout(() => fixL(links,j)); // alt: queueMicrotask()
-			if (DEBUG) { console.log('NormalizeURI.js: fixL: PAUSED on', j); }
+			if (DEBUG) { console.log('NormalizeURIandLinks.js: fixL: PAUSED on', j); }
 			return;
 		}
 
@@ -128,9 +128,9 @@ function fixL(links, j=0) {
 			}
 		}
 		if (lnk.pathname !== '/') { lnk.isFixed=1; }  // p: why?
-		// else { console.log('NormalizeURI.js: fixL: path is /',lnk); }
+		// else { console.log('NormalizeURIandLinks.js: fixL: path is /',lnk); }
 	}
-	if (DEBUG) { console.log('NormalizeURI.js: fixL: FINISHES (all, fixed)', j, cnt); }
+	if (DEBUG) { console.log('NormalizeURIandLinks.js: fixL: FINISHES (all, fixed)', j, cnt); }
 }
 
 
@@ -138,7 +138,7 @@ function fixL(links, j=0) {
 function regMutationObserver() {
 	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 	new MutationObserver(mutations => {
-		if (DEBUG) { console.log('NormalizeURI.js: regMutationObserver: fired'); }
+		if (DEBUG) { console.log('NormalizeURIandLinks.js: regMutationObserver: fired'); }
 
 		for (let m of mutations) {
 			if (m.addedNodes.length === 0) { continue; }
@@ -159,7 +159,7 @@ function regMutationObserver() {
 			// cool, but getElementsByTagName can be used on element and is probably faster
 			let elements_ = m.target.getElementsByTagName('a');
 			if (DEBUG && (elements.length !== 0 || elements_.length !== 0)) {
-				console.log('NormalizeURI.js: regMutationObserver: new links:', elements.length, elements_.length, elements__.length);
+				console.log('NormalizeURIandLinks.js: regMutationObserver: new links:', elements.length, elements_.length, elements__.length);
 			}
 			if (elements.length !== elements_.length) { alert('different results'); }
 			if (elements.length !== 0) { fixL(elements); }
@@ -182,8 +182,8 @@ fixBrowserAddressBox();
 
 if (DEBUG) {
 	if (document.readyState !== 'interactive' && document.readyState !== 'complete') {
-		window.addEventListener('DOMContentLoaded', () => console.log('NormalizeURI.js: DOMContentLoaded'));
-	} else { console.log('NormalizeURI.js: started already after DOMContentLoaded'); }
+		window.addEventListener('DOMContentLoaded', () => console.log('NormalizeURIandLinks.js: DOMContentLoaded'));
+	} else { console.log('NormalizeURIandLinks.js: started already after DOMContentLoaded'); }
 }
 
 if (document.readyState !== 'interactive' && document.readyState !== 'complete') {

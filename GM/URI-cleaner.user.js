@@ -1,32 +1,31 @@
+// This is a GreaseMonkey user script file.
+// It contains only the Metadata Block.
+// All JavaScript code is in separate files, to make development more portable and easier.
+//
+// JS files included using require Key are downloaded only once while version Key here is the same.
+// Grease Monkey (and alternatives) will download and cache all included files, joined all in one.
+// There is no speed or bandwidth use difference to a method where all JS code is written in this one file.
+// And the same is with transparency. Included external files can be inspected in GM (or Tamper Monkey) editor in separate tabs.
+
 // ==UserScript==
-// @name         IMDb - fix links
+// @name         Fix URI and links
 // @namespace    http://www.ponius.com/uricl/
-// @description  Removes all tracking info from imdb links. Keeps other parameters intact.
+// @description  Removes all tracking info and clutter from links. Keeps other parameters intact.
 // @author       papo
 // @version      1.6
+// @license      GPLv2
 //// Sites
 //// match can not be http?:// nor http*://
-// @match        http://*.imdb.com/*
-// @match        https://*.imdb.com/*
-// Xinclude      https://*.imdb.com/*
-// Xinclude      http*://*.imdb.com/*
+// @match        *://*.imdb.com/*
+// @match        *://*.google.*/*
+// @match        *://*.twitter.com/*
 //// run-at
-//// all:    document-start -> document-end (default) -> document-idle
-//// tampermonkey has more, but script will silently fail using e.g. document-body in GreaseMonkey
+/// all possible: document-start -> document-end (default) -> document-idle
+/// tampermonkey has more, but if used in GreaseMonkey, script will silently fail. e.g. document-body
 // @run-at       document-start
 // @grant        none
-// @require      http://www.ponius.com/uricl/src/NormalizeURI.js?v1.5
+// @require      http://www.ponius.com/uricl/src/NormalizeURIandLinks.js?v1.5
+// @require      http://www.ponius.com/uricl/src/IMDb.js?v1.5
+// @require      http://www.ponius.com/uricl/src/google.js?v1.5
+// @require      http://www.ponius.com/uricl/src/twitter.js?v1.5
 // ==/UserScript==
-
-// This is GreaseMonkey user script file.
-// It contains only the header.
-// Main code and other files are generic, not GM specific.
-// They are included using @require directive.
-//
-// Included files are downloaded only once. Then again with new version.
-// Grease Monkey (and alternatives) will cache included JS files joined all in one.
-// During use, there is no difference if the whole JS code is in this cache file,
-// or if parts are included using @require direction.
-//
-// Included external files can be inspected in GM (or Tamper Monkey) editor in separate tabs.
-
