@@ -23,11 +23,17 @@
 // YYYnamespace      YYYYYY
 // YYYdescription    YYYYYY
 // @author         papo
-// YYYversion        YYYYYY.YYYYYY.YYYYYY
+// YYYversion        YYYYYY.YYYYYY.YYYYYY  Tamper Monkey ignores version change here (because file:?) and do not auto update
 // YYYlicense        YYYYYY
 // @match          *://*.imdb.com/*
-// @match          *://*.google.*/*
+// 
+// https://developer.chrome.com/docs/extensions/mv3/match_patterns/
+// match          *://*.google.*/* not possible
+//
+// @match          *://*.google.com/*
+// @match          *://*.google.sk/*
 // @match          *://*.twitter.com/*
+// YYYrun-at       document-start
 // @run-at       document-body
 //// Granting everything in this development version.
 // @grant          GM.getValue
@@ -60,10 +66,10 @@
 // YYYrequire        https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 
 //// Project files
+// @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\NormalizeURIandLinks.js
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\IMDb.js
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\google.js
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\twitter.js
-// @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\NormalizeURIandLinks.js
 
 //// Chain the production version GM user script
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\GM\URI-cleaner.user.js

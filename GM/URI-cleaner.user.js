@@ -12,20 +12,21 @@
 // @namespace    http://www.ponius.com/uricl/
 // @description  Removes all tracking info and clutter from links. Keeps other parameters intact.
 // @author       papo
-// @version      1.6
+// @version      1.7
 // @license      GPLv2
 //// Sites
 //// match can not be http?:// nor http*://
 // @match        *://*.imdb.com/*
-// @match        *://*.google.*/*
+// @match        *://*.google.com/*
+// @match        *://*.google.sk/*
 // @match        *://*.twitter.com/*
 //// run-at
 /// all possible: document-start -> document-end (default) -> document-idle
 /// tampermonkey has more, but if used in GreaseMonkey, script will silently fail. e.g. document-body
 // @run-at       document-start
 // @grant        none
-// @require      http://www.ponius.com/uricl/src/NormalizeURIandLinks.js?v1.5
-// @require      http://www.ponius.com/uricl/src/IMDb.js?v1.5
-// @require      http://www.ponius.com/uricl/src/google.js?v1.5
-// @require      http://www.ponius.com/uricl/src/twitter.js?v1.5
+// @require      http://www.ponius.com/uricl/src/NormalizeURIandLinks.js?v1.7
+// @require      http://www.ponius.com/uricl/src/IMDb.js?v1.7
+// @require      http://www.ponius.com/uricl/src/google.js?v1.7
+// @require      http://www.ponius.com/uricl/src/twitter.js?v1.7
 // ==/UserScript==
