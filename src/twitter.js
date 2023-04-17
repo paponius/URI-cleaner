@@ -14,7 +14,7 @@ var HOSTNAMES_INCLUDE = [
 ];
 
 
-filterURIArgument = function (valuename, value, uri) {
+filterURIArgument = function (valuename, value, args, uri) {
 	if (
 		valuename === 's' ||   // source of the link
 		valuename === 't'      // tracking 

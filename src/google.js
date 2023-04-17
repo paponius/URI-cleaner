@@ -1,8 +1,17 @@
+/* jshint esversion: 6 */
 
 // This is a site-specific JS file. It is used together with NormalizeURIandLinks.js, which should be loaded before.
 //
 // IMDb.js is considered to be a template. Containing all possible features and description.
 
+/* Google Search parameters
+oq        Original Query
+sxsrf     Previous Page Load Date/Time
+ei        Search Session Start Date/Time
+ved       Page Load Date/Time
+biw,bih   Browser Width/Height
+https://stackoverflow.com/questions/69660435/what-are-the-components-of-a-google-com-url-string
+*/
 
 if (window.location.href.includes('.google.')) {
 
@@ -15,7 +24,7 @@ var HOSTNAMES_INCLUDE = [
 ];
 
 
-filterURIArgument = function (valuename, value, uri) {
+filterURIArgument = function (valuename, value, args, uri) {
 	if (
 		// client=firefox-b-d
 		valuename === 'client' // ||
@@ -23,8 +32,27 @@ filterURIArgument = function (valuename, value, uri) {
 		// valuename.startsWith('pf_rd_')
 
 		) { return false; }
+
+	// Remove all other parameters, modify order of words in value.
+	// Purpose: Maintaining a "Dictionary" as bookmarks.
+	// Need unified style, to not create multiple entries for one phrase/word
+	// if Google query contains a word "define", the word define will be moved to the front
+	// and all other parameters from the URI are removed
+	if ( valuename === 'q' && value.includes('define') ) {
+		const regex = new RegExp('(.*)(^|[ +])define([+ ]|$)(.*)'); // is it a word 'define'
+		let found = value.match(regex);
+		if (found) {
+			let ret = 'define';
+			if (found[1]) { ret += '+' + found[1]; }
+			if (found[4]) { ret += '+' + found[4]; }
+			if (ret === 'define') { return null; } // it's 'define' by itself. weird, but let it be as-is
+			Object.keys(args).forEach(key => delete args[key]); // args = {} would create new Object. not good.
+			return [valuename, ret];
+		}
+	}
 };
 
 fixBrowserAddressBox();
 // fixLinksOnPage();
 }
+

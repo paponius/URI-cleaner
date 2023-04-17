@@ -59,12 +59,13 @@ normURIPath = function (path, uri) {
  * In case argument is replaced, new text should be sanated. read description in objectToQuery().
  * @param  {String}             valuename Name of an URI argument.
  * @param  {String}             value     Value of an URI argument.
+ * @param  {Location (Object)}  args      Optional. All parameters of the URI. To modify other than the current one.
  * @param  {Location (Object)}  uri       Optional. The URI being modified. (Do not modify it directly)
  * @return {false/null/Array}             false: remove the argument
  *                                        null/undefined: Do not modify or remove the argument
- *                                        Array: Modified valuename and/or value
+ *                                        Array: Modified [valuename, value]
  */
-filterURIArgument = function (valuename, value, uri) {
+filterURIArgument = function (valuename, value, args, uri) {
 	if (
 		valuename === 'ref_' || // remove 'ref_'
 

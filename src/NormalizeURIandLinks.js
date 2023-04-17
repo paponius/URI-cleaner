@@ -45,7 +45,7 @@ function parseURIQuery(uri) {
 	// iterates array of argument pairs (e.g. [arg=value, arg2=value2, ...] )
 	uri.search.substr(1).split('&').forEach(item => {
 		if (item === '') { return; } // empty query, or two sequential &&
-		var [valname, val] = decodeURI(item).split('='); // Name-Value pair
+		var [valname, val] = decodeURIComponent(item).split('='); // Name-Value pair
 		if (val === undefined) { val = true; // missing Value means true 
 		} else if ((val.charAt(0) === '"' && val.charAt(val.length - 1) === '"') ||
 			       (val.charAt(0) === "'" && val.charAt(val.length - 1) === "'")) {
@@ -67,14 +67,16 @@ function parseURIQuery(uri) {
 // https://stackoverflow.com/a/22678417/3273963
 // todo: maybe remove '?' from result to be more generic
 // encodeURIComponent vs encodeURI, the former also replaces ; / ? : @ & = + $ , #
-// We want to keep unmodified parameters as they were. if decodeURI was used above, encodeURI should be used here.
+// If decodeURI was used above, encodeURI should be used here. Or decodeURIComponent and encodeURIComponent.
+// Using encodeURIComponent/decodeURIComponent. Because entering e.g. ':' in omnibox will pass it to google which will change the ':' in URI to %3A, %3A will be decoded here in args Object to ':', than back to what it was.
+// If encodeURIComponent was not used, '%3A' will stay '%3A' in args Object, than '%' will be encoded with result: '%253A'
 // A sanation for "+, ? ..." should be done when replacing parameters in filterURIArgument().
 function objectToQuery(obj) {
 	function compareFn(a, b) {
 		return orderOfURIArgs.indexOf(a) - orderOfURIArgs.indexOf(b);
 	}
 	var str = Object.keys(obj).sort(compareFn).map(prop => {
-		return [prop, obj[prop]].map(encodeURI).join("=");
+		return [prop, obj[prop]].map(encodeURIComponent).join("=");
 	}).join("&");
 	if (str !== '') { return '?' + str; }
 	return '';
@@ -87,7 +89,7 @@ function normURIArguments(args, uri) {
 
 	if (filterURIArgument !== null) {
 		for (let arg in args) {
-			let retFilter = filterURIArgument(arg, args[arg], uri);
+			let retFilter = filterURIArgument(arg, args[arg], args, uri);
 			if (retFilter === undefined || retFilter === null) { // no change
 			} else if (retFilter === false) {
 				delete args[arg];

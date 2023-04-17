@@ -1,5 +1,5 @@
 # URI cleaner
-Can be used to manipulate URI in browser's Address Bar an in links on a web page.
+Can be used to manipulate URI in browser's Address Bar and in links on a web page.
 
 Remove, modify, sort arguments (query like "?param=value&...").
 Modify URI path.
@@ -26,8 +26,8 @@ GM/URI-cleaner.user.js
 load NormalizeURIandLinks.js
 See IMDb.js file for description and examples.
 
-## Add a web page
-Use IMDb.js as a template to create new js file.
+### Add a web page
+Use IMDb.js as a template to create new JS file.
 See IMDb.js file for description and examples.
 
 If used with Greasemonkey/Tampermonky/...

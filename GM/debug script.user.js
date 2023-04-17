@@ -79,4 +79,5 @@
 
 // YYYconnect        *
 // YYYnoframes
+// @noframes
 // ==/UserScript==
