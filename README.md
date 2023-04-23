@@ -1,7 +1,7 @@
 # URI cleaner
 Can be used to manipulate URI in browser's Address Bar and in links on a web page.
 
-Remove, modify, sort arguments (query like "?param=value&...").
+Remove, modify, sort arguments (query like "?param=value&...").  
 Modify URI path.
 
 - to maintain visited history and bookmarks
@@ -9,10 +9,11 @@ Modify URI path.
 - Removes tracking and other arguments useless for a user.
 - Nicer Address Bar. No tracking and shorter when page link is shared by copying from browser Address Bar.
 
-This will not interfere with loading of currently opened page. To load with different arguments.
-Nor the page is reloaded after Address Bar is changed.
+Changes to the Browser's Address bar will not interfere with loading of the currently opened page.  
+Changes are done when page is already being opened with the original URI. The page will not be re-loaded with changed arguments.  
+But any JavaScript on a page accessing the page URI will see the modified one.
 
-There is no hash manipulation filter function implemented at this point. But hash part of URI will not be affected.
+There is no hash manipulation filter function implemented at this point. Hash part of URI will not be affected.
 
 # Usage
 Can be used as-is with Greasemonkey, but to modify and add more sites, JS basic knowledge is required.

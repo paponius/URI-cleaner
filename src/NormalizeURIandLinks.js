@@ -45,7 +45,8 @@ function parseURIQuery(uri) {
 	// iterates array of argument pairs (e.g. [arg=value, arg2=value2, ...] )
 	uri.search.substr(1).split('&').forEach(item => {
 		if (item === '') { return; } // empty query, or two sequential &&
-		var [valname, val] = decodeURIComponent(item).split('='); // Name-Value pair
+		// var [valname, val] = decodeURIComponent(item).split('='); // see desc in objectToQuery()
+		var [valname, val] = item.split('='); // Name-Value pair
 		if (val === undefined) { val = true; // missing Value means true 
 		} else if ((val.charAt(0) === '"' && val.charAt(val.length - 1) === '"') ||
 			       (val.charAt(0) === "'" && val.charAt(val.length - 1) === "'")) {
@@ -64,19 +65,37 @@ function parseURIQuery(uri) {
 }
 
 
-// https://stackoverflow.com/a/22678417/3273963
-// todo: maybe remove '?' from result to be more generic
-// encodeURIComponent vs encodeURI, the former also replaces ; / ? : @ & = + $ , #
-// If decodeURI was used above, encodeURI should be used here. Or decodeURIComponent and encodeURIComponent.
-// Using encodeURIComponent/decodeURIComponent. Because entering e.g. ':' in omnibox will pass it to google which will change the ':' in URI to %3A, %3A will be decoded here in args Object to ':', than back to what it was.
-// If encodeURIComponent was not used, '%3A' will stay '%3A' in args Object, than '%' will be encoded with result: '%253A'
-// A sanation for "+, ? ..." should be done when replacing parameters in filterURIArgument().
+/**
+ * Translates an Object to URI query String. Sorting properties using order from orderOfURIArgs Array.
+ * Use of encodeURI/decodeURI, or encodeURIComponent/decodeURIComponent:
+ * I did try to decode escaped characters when converting to Object in parseURIQuery and then encoding back here,
+ * but it was not possible to keep original URI as it was in all cases.
+ * encodeURIComponent vs encodeURI, the former also replaces ; / ? : @ & = + $ , #
+ * e.g. ':'
+ * With *codeURI, ':' entered in Omnibox is passed to Google, which changes the ':' to %3A in the URI,
+ *   This script will keep %3A in args Object, but then encode '%3A' to '%253A'
+ *   Using *codeURIComponent works fine for ':'. Being changed from %3A to ':' in args Object and back to %3A in URI.
+ * e.g. ' ' (Space)
+ * When a text with spaces is entered in the Omnibox, Google will replace all spaces with '+' in the URI.
+ *   Using *codeURIComponent will keep '+' in Object, but then encodes it to %2B back to URI.
+ *   %2B is used in URI by Google when the user enter real '+' (and not a space). So the result is that after a
+ *   new page load, Google shows results for text with '+' between words.
+ * It's possible to handle Space to '+' cases individually, but the method is site specific
+ *  and this JS file is generic.
+ * Also, there might be other similar issue with a character being unencoded in URI and then mangled by this.
+ * Best solution is to keep characters as they are. And do decoding in site specific functions if needed.
+ * https://stackoverflow.com/a/22678417/3273963
+ * @method objectToQuery
+ * @param  {Object}      obj The Object to be translated.
+ * @return {String}          The URI Query including leading '?', or an empty String.
+ */
 function objectToQuery(obj) {
 	function compareFn(a, b) {
 		return orderOfURIArgs.indexOf(a) - orderOfURIArgs.indexOf(b);
 	}
 	var str = Object.keys(obj).sort(compareFn).map(prop => {
-		return [prop, obj[prop]].map(encodeURIComponent).join("=");
+		// return [prop, obj[prop]].map(encodeURIComponent).join("="); // with *codeURIComponent (see above desc)
+		return [prop, obj[prop]].join("=");
 	}).join("&");
 	if (str !== '') { return '?' + str; }
 	return '';

@@ -84,6 +84,9 @@ filterURIArgument = function (valuename, value, args, uri) {
 		// value='xaxvalue'; // Or keep the old value. (Keep line disabled)
 		// return [valuename, value]; // must always return both as an Array
 	// }
+
+	// use decodeURIComponent(value) or decodeURI(value) instead of just 'value' if required.
+	// read description in objectToQuery()
 };
 
 

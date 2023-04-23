@@ -36,10 +36,12 @@ filterURIArgument = function (valuename, value, args, uri) {
 	// Remove all other parameters, modify order of words in value.
 	// Purpose: Maintaining a "Dictionary" as bookmarks.
 	// Need unified style, to not create multiple entries for one phrase/word
-	// if Google query contains a word "define", the word define will be moved to the front
-	// and all other parameters from the URI are removed
+	// If Google query contains a word "define", the word define will be moved to the front
+	// and all other parameters from the URI are removed.
+	// As the page loads with parameters as they were and is not reloaded, "Searched text"
+	//  in the page will show order of words as they were entered. That is not important for Bookmarks.
 	if ( valuename === 'q' && value.includes('define') ) {
-		const regex = new RegExp('(.*)(^|[ +])define([+ ]|$)(.*)'); // is it a word 'define'
+		const regex = new RegExp('(.*)(^|[ +])define([ +]|$)(.*)'); // is it a word 'define'
 		let found = value.match(regex);
 		if (found) {
 			let ret = 'define';
