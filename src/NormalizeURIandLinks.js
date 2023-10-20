@@ -257,7 +257,9 @@ function regMutationObserver() {
 
 fixLinksOnPage = function () {
 	if (document.readyState !== 'interactive' && document.readyState !== 'complete') {
-		window.addEventListener('DOMContentLoaded', fixLinksOnPage); }
+		window.addEventListener('DOMContentLoaded', fixLinksOnPage);
+		return;
+	}
 
 	if (DEBUG) { console.log('NormalizeURIandLinks.js: START fixLinksOnPage()'); }
 	if (initialized !== true) { init(); }
