@@ -14,15 +14,10 @@
 // @author       papo
 // @version      1.9.1
 // @license      GPLv2
-//// Sites
-//// match can not be http?:// nor http*://
 // @match        *://*.imdb.com/*
 // @match        *://*.google.com/*
 // @match        *://*.google.sk/*
 // @match        *://*.twitter.com/*
-//// run-at
-/// all possible: document-start -> document-end (default) -> document-idle
-/// tampermonkey has more, but if used in GreaseMonkey, script will silently fail. e.g. document-body
 // @run-at       document-start
 // @grant        none
 // @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/NormalizeURIandLinks.js#sha256=11d0a39307e577ec8c8ae3f4106c9c2f92ded4eaf4e42528421adc3f6e1258c5
