@@ -156,7 +156,7 @@ fixBrowserAddressBox = function () {
 		//   when arg starts with '#', only hash is replaced
 		//   when arg starts with '?', query and hash is replaced
 		//   when arg starts with 'a char' last part of path is replaced. query and hash is replaced or removed.
-		//   when arg starts with '/', everything is replaced after the hsotname
+		//   when arg starts with '/', everything is replaced after the hostname
 		//
 		// To clear query. '' can't be used, must replace path with itself (location.pathname)
 		history.replaceState(null, document.title, (objectToQuery(args) || location.pathname) + location.hash);
@@ -198,11 +198,13 @@ function fixL(links, j=0) {
 			return;
 		}
 
-		if (lnk.protocol && lnk.protocol.startsWith('http') && checkHostname(lnk) && lnk.search) {
-			let args = parseURIQuery(lnk);
-			if (normURIArguments(args, lnk)) { // true: a fix was made
-				lnk.search = objectToQuery(args);
-				if (DEBUG) { debug_cnt++; }
+		if (lnk.protocol && lnk.protocol.startsWith('http') && checkHostname(lnk)) {
+			if (lnk.search) {
+				let args = parseURIQuery(lnk);
+				if (normURIArguments(args, lnk)) { // true: a fix was made
+					lnk.search = objectToQuery(args);
+					if (DEBUG) { debug_cnt++; }
+				}
 			}
 			if (normURIPath !== null) {
 				let retNormURIPath = normURIPath(lnk.pathname, lnk);
@@ -210,8 +212,14 @@ function fixL(links, j=0) {
 					lnk.pathname = retNormURIPath;
 				}
 			}
+			if (normURIHostname !== null) {
+				let retNormURIHostname = normURIHostname(lnk.hostname, lnk);
+				if (retNormURIHostname !== null && retNormURIHostname !== undefined) {
+					lnk.hostname = retNormURIHostname;
+				}
+			}
 		}
-		if (lnk.pathname !== '/') { lnk.isFixed=1; }  // p: why?
+		if (lnk.pathname !== '/') { lnk.isFixed=1; }  // p: I forgot why did I do if '/'?
 		// else { console.log('NormalizeURIandLinks.js: fixL: path is /',lnk); }
 	}
 	if (DEBUG) { console.log('NormalizeURIandLinks.js: fixL: FINISHES (all, fixed)', j, debug_cnt); }
@@ -224,29 +232,40 @@ function regMutationObserver() {
 	new MutationObserver(mutations => {
 		if (DEBUG) { console.log('NormalizeURIandLinks.js: regMutationObserver: fired'); }
 
+		// m.target is parent, whose child/children were added
 		for (let m of mutations) {
 			if (m.addedNodes.length === 0) { continue; }
 
-			// todo: but target is only the one whose children were added
-			//     we should not check target, but m.addedNodes
-			let elements__ = [];
-			for (let par of m.addedNodes) {
-				if (!(par instanceof HTMLElement)) { continue; } // could be #Text and error
-				if (par instanceof HTMLStyleElement) { continue; } // Style does not have children
-				if (par.children && par.children.length === 0) { continue; } // will this help?
-				let tmp = par.getElementsByTagName('a');
-				let tmp_arr = Array.prototype.slice.call(tmp);
-				elements__ = elements__.concat(tmp_arr);
+			// Tried three methods of getting "A" elements. mA, mB, mC
+			// I used mB, mC together for a year and there were no differences. Did not test speed.
+			// But mB and mC are wrong, as they check all elements under parent of the added Node.
+			// that means also previously existing siblings of the added Node and all their children.
+			// Will now test if mA is working OK, then will remove mB and mC from here.
+
+			// maybe check if not m.target.tagName === "HEAD"
+			let elements_mA = [];
+			for (let node of m.addedNodes) {
+				if (!(node instanceof HTMLElement)) { continue; } // could be #Text and error
+				if (node instanceof HTMLStyleElement) { continue; } // Style does not have children
+				// if (node.children && node.children.length === 0) { continue; } // no. also node can be <a>
+				if (node.tagName === 'A') { elements_mA.push(node); }
+				let tmp = node.getElementsByTagName('a');
+				let tmp_arr = Array.prototype.slice.call(tmp); // convert to regular Array
+				elements_mA = elements_mA.concat(tmp_arr); // merge two Arrays
 			}
 
-			let elements = m.target.querySelectorAll(':scope a');
-			// cool, but getElementsByTagName can be used on element and is probably faster
-			let elements_ = m.target.getElementsByTagName('a');
-			if (DEBUG && (elements.length !== 0 || elements_.length !== 0)) {
-				console.log('NormalizeURIandLinks.js: regMutationObserver: new links:', elements.length, elements_.length, elements__.length);
+			if (DEBUG) { // test anyway for a while
+				// :scope matches m.target element
+				var elements_mC = m.target.querySelectorAll(':scope a');
+				// cool, but getElementsByTagName can be used on element and is probably faster
+				var elements_mB = m.target.getElementsByTagName('a');
+
+				if (DEBUG && (elements_mA.length !== 0 || elements_mC.length !== 0 || elements_mB.length !== 0)) {
+					console.log('NormalizeURIandLinks.js: regMutationObserver: new links:',elements_mA.length, elements_mB.length, elements_mC.length);
+				}
 			}
-			if (elements.length !== elements_.length) { alert('different results'); }
-			if (elements.length !== 0) { fixL(elements); }
+
+			if (elements_mA.length !== 0) { fixL(elements_mA); }
 		}
 	})
 	.observe(document, {
@@ -263,8 +282,8 @@ fixLinksOnPage = function () {
 
 	if (DEBUG) { console.log('NormalizeURIandLinks.js: START fixLinksOnPage()'); }
 	if (initialized !== true) { init(); }
-	regMutationObserver();
 	fixL(document.links);
+	regMutationObserver();
 };
 
 })();

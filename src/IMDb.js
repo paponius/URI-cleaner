@@ -26,6 +26,19 @@ var HOSTNAMES_INCLUDE = [
 */
 
 /**
+ * Modify the Hostname in a link.
+ * <A>.baseURI will not change. If needed, must also modify uri.baseURI
+ * @param  {String}             hostname  path part of the URI
+ * @param  {Location (Object)}  uri       Optional. Contains URI object on which path is being fixed. (Do not modify directly)
+ * @return {String/null}                  Modified Hostname. null: keep old Hostname.
+ */
+// normURIHostname = function (hostname, uri) {
+// 	if (hostname === 'x.com') { return 'twitter.com'; }
+// 	return null;
+// };
+
+
+/**
  * Modify the Path part of a URI or link.
  * (Do not modify uri parameter directly. e.g. uri.pathname+='/', the web page will be reloaded and might even loop)
  * @param  {String}             path  path part of the URI
@@ -62,7 +75,7 @@ normURIPath = function (path, uri) {
  * @param  {Location (Object)}  args      Optional. All parameters of the URI. To modify other than the current one.
  * @param  {Location (Object)}  uri       Optional. The URI being modified. (Do not modify it directly)
  * @return {false/null/Array}             false: remove the argument
- *                                        null/undefined: Do not modify or remove the argument
+ *                                        null/undefined: Do not modify nor remove the argument
  *                                        Array: Modified [valuename, value]
  */
 filterURIArgument = function (valuename, value, args, uri) {

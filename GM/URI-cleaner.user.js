@@ -12,7 +12,7 @@
 // @namespace    https://github.com/paponius/URI-cleaner/
 // @description  Removes clutter from links. Like tracking data. description: https://github.com/paponius/URI-cleaner/
 // @author       papo
-// @version      1.9.1
+// @version      2.0
 // @license      GPLv2
 // @match        *://*.imdb.com/*
 // @match        *://*.google.com/*
@@ -20,9 +20,9 @@
 // @match        *://*.twitter.com/*
 // @run-at       document-start
 // @grant        none
-// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/NormalizeURIandLinks.js#sha256=11d0a39307e577ec8c8ae3f4106c9c2f92ded4eaf4e42528421adc3f6e1258c5
-// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/IMDb.js#md5=838d11defbafc70dd40abf57ca74532a
-// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/google.js#md5=954ef7edc218096a47409d8b369e6562
-// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/twitter.js#md5=8107cba4daf4c89745e55ec0221d5084
+// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/NormalizeURIandLinks.js
+// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/IMDb.js
+// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/google.js
+// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/twitter.js
 // @noframes
 // ==/UserScript==

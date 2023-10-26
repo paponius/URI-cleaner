@@ -7,8 +7,6 @@
 if (window.location.href.includes('twitter.com')) {
 
 
-// Include these Hostnames while fixing links on a page. Try to fix only links which refer to URI
-// on these hosts. If none is included, * is assumed (any and all URLs).
 var HOSTNAMES_INCLUDE = [
 	'twitter.com'
 ];
@@ -22,6 +20,12 @@ filterURIArgument = function (valuename, value, args, uri) {
 		// valuename.startsWith('pf_rd_')
 
 		) { return false; }
+};
+
+
+normURIHostname = function (hostname, uri) {
+	if (hostname === 'x.com') { return 'twitter.com'; }
+	return null;
 };
 
 fixBrowserAddressBox();
