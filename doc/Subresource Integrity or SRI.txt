@@ -1,0 +1,7 @@
+Added md5 hashes, https://greasyfork.org/en/scripts/477847-fix-uri-and-links
+used: openssl dgst -md5 "filepath"
+Firstly it was wrong, probably becasue links were on my site where links breaks when not accessed from browser.
+
+Then later removed hashes, as Greasy Fork refused my script, as it's "empty".
+All code must be in one script, they say.
+

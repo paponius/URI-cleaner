@@ -12,7 +12,7 @@
 // @namespace    https://github.com/paponius/URI-cleaner/
 // @description  Removes clutter from links. Like tracking data. description: https://github.com/paponius/URI-cleaner/
 // @author       papo
-// @version      2.0
+// @version      2.1
 // @license      GPLv2
 // @match        *://*.imdb.com/*
 // @match        *://*.google.com/*

@@ -14,6 +14,7 @@
 var filterURIArgument = null;
 var sortURIArgument = null;
 var normURIPath = null;
+var normURIHostname = null;
 
 // all possible action functions. called from site-specific js files.
 var fixBrowserAddressBox;
@@ -230,7 +231,7 @@ function fixL(links, j=0) {
 function regMutationObserver() {
 	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 	new MutationObserver(mutations => {
-		if (DEBUG) { console.log('NormalizeURIandLinks.js: regMutationObserver: fired'); }
+		if (DEBUG) { console.count('NormalizeURIandLinks.js: regMutationObserver: fired'); }
 
 		// m.target is parent, whose child/children were added
 		for (let m of mutations) {

@@ -2,7 +2,7 @@
 
 // This is a site-specific JS file. It is used together with NormalizeURIandLinks.js, which should be loaded before.
 //
-// IMDb.js is considered to be a template. Containing all possible features and description.
+// IMDb.js is also a template. Containing all possible features and descriptions.
 
 
 // Needed only for GM. WebExt can selectively load this js file.
