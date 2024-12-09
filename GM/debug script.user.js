@@ -33,6 +33,8 @@
 // @match          *://*.google.com/*
 // @match          *://*.google.sk/*
 // @match          *://*.twitter.com/*
+// @match          *://*.kick4ss.com/*
+
 // YYYrun-at       document-start
 // @run-at       document-body
 //// Granting everything in this development version.
@@ -70,6 +72,7 @@
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\IMDb.js
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\google.js
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\twitter.js
+// @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\src\any_site_remove_uri_shortener.js
 
 //// Chain the production version GM user script
 // @require        file://C:\Users\Papo\Documents\GitHub\URI-cleaner\GM\URI-cleaner.user.js

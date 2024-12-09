@@ -12,17 +12,19 @@
 // @namespace    https://github.com/paponius/URI-cleaner/
 // @description  Removes clutter from links. Like tracking data. description: https://github.com/paponius/URI-cleaner/
 // @author       papo
-// @version      2.1
+// @version      2.2
 // @license      GPLv2
 // @match        *://*.imdb.com/*
 // @match        *://*.google.com/*
 // @match        *://*.google.sk/*
 // @match        *://*.twitter.com/*
+// @match        *://*.kick4ss.com/*
 // @run-at       document-start
 // @grant        none
 // @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/NormalizeURIandLinks.js
 // @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/IMDb.js
 // @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/google.js
 // @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/twitter.js
+// @require      https://raw.githubusercontent.com/paponius/URI-cleaner/main/src/any_site_remove_uri_shortener.js
 // @noframes
 // ==/UserScript==

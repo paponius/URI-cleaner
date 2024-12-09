@@ -1,15 +1,19 @@
 /* jshint esversion: 6 */
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FILE: IMDb.js
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // This is a site-specific JS file. It is used together with NormalizeURIandLinks.js, which should be loaded before.
 //
 // IMDb.js is also a template. Containing all possible features and descriptions.
 
 
 // Needed only for GM. WebExt can selectively load this js file.
-// I am not sure what is used in GM or WebExt to search for web page pattern. It is possible
+// I am not sure what is used in GM (in @match metadata directive) or in WebExt to search for web page pattern. It is possible
 // to use "*" on specific parts of the URI, but not anywhere. It's not really globs and not regex.
 // There are no globs in JS. 
 //
+// can't use 'return' here, as this script is concatenated with others in a common scope
 if (window.location.href.includes('imdb.com')) {
 // alt: window.location.hostname
 // alt: window.location.origin
