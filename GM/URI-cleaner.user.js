@@ -8,11 +8,11 @@
 // And the same is with transparency. Included external files can be inspected in GM (or Tamper Monkey) editor in separate tabs.
 
 // ==UserScript==
-// @name         Fix URI and links
+// @name         URI Cleaner
 // @namespace    https://github.com/paponius/URI-cleaner/
-// @description  Removes clutter from links. Like tracking data. description: https://github.com/paponius/URI-cleaner/
+// @description  Fix URI and links. To remove clutter, tracking, to uniform links for better bookmark/history management. Description: https://github.com/paponius/URI-cleaner/
 // @author       papo
-// @version      2.2
+// @version      2.3
 // @license      GPLv2
 // @match        *://*.imdb.com/*
 // @match        *://*.google.com/*

@@ -19,11 +19,11 @@
 // 23-04 compared to version in GM---IMDb-Large-Images from 21-10. This is newer now.
 
 // ==UserScript==
-// @name           DEBUG - Fix URI and links
+// @name           DEBUG - URI Cleaner
 // YYYnamespace      YYYYYY
 // YYYdescription    YYYYYY
 // @author         papo
-// YYYversion        YYYYYY.YYYYYY.YYYYYY  Tamper Monkey ignores version change here (because file:?) and do not auto update
+// YYYversion        YYYYYY.YYYYYY.YYYYYY  Tamper Monkey ignores version change here (because file:?) and does not auto update
 // YYYlicense        YYYYYY
 // @match          *://*.imdb.com/*
 // 
